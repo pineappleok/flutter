@@ -23,8 +23,13 @@ import org.gradle.api.tasks.bundling.Jar
 
 buildscript {
     repositories {
-        google()
-        jcenter()
+        // 这里做了修改，使用国内阿里的代理
+        // google()
+        // jcenter()
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
+		// maven { url 'https://storage.googleapis.com/download.flutter.io'}
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.0'
@@ -201,7 +206,8 @@ class FlutterPlugin implements Plugin<Project> {
         if (!supportsBuildMode(flutterBuildMode)) {
             return
         }
-        String hostedRepository = System.env.FLUTTER_STORAGE_BASE_URL ?: DEFAULT_MAVEN_HOST
+        // String hostedRepository = System.env.FLUTTER_STORAGE_BASE_URL ?: DEFAULT_MAVEN_HOST
+        String hostedRepository = 'https://mirrors.tuna.tsinghua.edu.cn/flutter'
         String repository = useLocalEngine()
             ? project.property('local-engine-repo')
             : "$hostedRepository/download.flutter.io"
